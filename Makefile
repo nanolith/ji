@@ -1,7 +1,7 @@
 PWD=$(CURDIR)
 BUILD_DIR=$(PWD)/build
 SRCDIR=$(PWD)/src
-DIRS=$(SRCDIR)
+DIRS=$(SRCDIR) $(SRCDIR)/disposable
 INCLUDE_DIR=$(PWD)/include
 INCLUDE_DIRS=$(INCLUDE_DIR) $(INCLUDE_DIR)/ej
 DIRS_BUILT=$(BUILD_DIR)/dirs_built
@@ -10,7 +10,7 @@ INCLUDES=$(foreach d,$(INCLUDE_DIRS),$(wildcard $(d)/*.h))
 SOURCES=$(foreach d,$(DIRS),$(wildcard $(d)/*.c))
 STRIPPED_SOURCES=$(patsubst $(SRCDIR)/%,%,$(SOURCES))
 TESTDIR=$(PWD)/test
-TESTDIRS=$(TESTDIR)
+TESTDIRS=$(TESTDIR) $(TESTDIR)/disposable
 TEST_BUILD_DIR=$(BUILD_DIR)/test
 TEST_DIRS=$(filter-out $(TESTDIR), \
     $(patsubst $(TESTDIR)/%,$(TEST_BUILD_DIR)/%,$(TESTDIRS)))
@@ -23,17 +23,17 @@ CHECKED_BUILD_DIR=$(BUILD_DIR)/checked
 CHECKED_DIRS=$(filter-out $(SRCDIR), \
 	$(patsubst $(SRCDIR)/%,$(CHECKED_BUILD_DIR)/%,$(DIRS)))
 CHECKED_OBJECTS= \
-    $(patsubst %.cpp,$(CHECKED_BUILD_DIR)/%.o,$(STRIPPED_SOURCES))
+    $(patsubst %.c,$(CHECKED_BUILD_DIR)/%.o,$(STRIPPED_SOURCES))
 DEBUG_BUILD_DIR=$(BUILD_DIR)/debug
 DEBUG_DIRS=$(filter-out $(SRCDIR), \
 	$(patsubst $(SRCDIR)/%,$(DEBUG_BUILD_DIR)/%,$(DIRS)))
 DEBUG_OBJECTS= \
-    $(patsubst %.cpp,$(DEBUG_BUILD_DIR)/%.o,$(STRIPPED_SOURCES))
+    $(patsubst %.c,$(DEBUG_BUILD_DIR)/%.o,$(STRIPPED_SOURCES))
 RELEASE_BUILD_DIR=$(BUILD_DIR)/release
 RELEASE_DIRS=$(filter-out $(SRCDIR), \
 	$(patsubst $(SRCDIR)/%,$(RELEASE_BUILD_DIR)/%,$(DIRS)))
 RELEASE_OBJECTS= \
-    $(patsubst %.cpp,$(RELEASE_BUILD_DIR)/%.o,$(STRIPPED_SOURCES))
+    $(patsubst %.c,$(RELEASE_BUILD_DIR)/%.o,$(STRIPPED_SOURCES))
 LIB_NAME=libej.a
 CHECKED_LIB=$(CHECKED_BUILD_DIR)/$(LIB_NAME)
 DEBUG_LIB=$(DEBUG_BUILD_DIR)/$(LIB_NAME)
