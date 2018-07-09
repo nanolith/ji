@@ -11,6 +11,8 @@
 extern "C" {
 #endif /*__cplusplus*/
 
+#include <stddef.h>
+
 /**
  * \brief Disposable interface.
  *
@@ -36,6 +38,13 @@ typedef struct disposable
  * \param disp              the disposable structure to dispose.
  */
 void dispose(disposable_t* disp);
+
+/**
+ * \brief Model checking property for the disposable interface.
+ */
+#define PROP_VALID_DISPOSABLE(disp) \
+    (NULL != (disp) && \
+     NULL != (disp)->dispose)
 
 #ifdef   __cplusplus
 }

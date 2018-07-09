@@ -6,6 +6,7 @@
  */
 
 #include <ej/disposable.h>
+#include <model_check/assert.h>
 
 /**
  * \brief Dispose of a disposable structure.
@@ -18,5 +19,7 @@
  */
 void dispose(disposable_t* disp)
 {
+    MODEL_ASSERT(PROP_VALID_DISPOSABLE(disp));
+
     disp->dispose(disp);
 }

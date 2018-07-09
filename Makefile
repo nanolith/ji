@@ -9,6 +9,8 @@ DIRS_BUILT=$(BUILD_DIR)/dirs_built
 INCLUDES=$(foreach d,$(INCLUDE_DIRS),$(wildcard $(d)/*.h))
 SOURCES=$(foreach d,$(DIRS),$(wildcard $(d)/*.c))
 STRIPPED_SOURCES=$(patsubst $(SRCDIR)/%,%,$(SOURCES))
+MODEL_MAKEFILES?= \
+    $(foreach file,$(wildcard models/*.mk),$(notdir $(file)))
 TESTDIR=$(PWD)/test
 TESTDIRS=$(TESTDIR) $(TESTDIR)/disposable
 TEST_BUILD_DIR=$(BUILD_DIR)/test
@@ -52,7 +54,7 @@ RELEASE_CFLAGS=$(COMMON_CFLAGS) -O2
 TEST_CXXFLAGS=$(COMMON_CXXFLAGS) -I $(GTEST_DIR) \
     -I $(GTEST_DIR)/include -O2
 
-.PHONY: pre-build build-dirs all clean test
+.PHONY: pre-build build-dirs all clean test model-check
 .SECONDARY: all
 
 pre-build: build-dirs
@@ -103,3 +105,6 @@ $(DIRS_BUILT):
              $(RELEASE_BUILD_DIR) $(TEST_BUILD_DIR) $(CHECKED_DIRS) \
              $(DEBUG_DIRS) $(RELEASE_DIRS) $(TEST_DIRS)
 	touch $(DIRS_BUILT)
+
+model-check:
+	$(foreach n, $(MODEL_MAKEFILES), (cd models && $(MAKE) -f $(n)) &&) true
