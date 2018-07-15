@@ -1,7 +1,7 @@
 PWD=$(CURDIR)
 BUILD_DIR=$(PWD)/build
 SRCDIR=$(PWD)/src
-DIRS=$(SRCDIR) $(SRCDIR)/disposable
+DIRS=$(SRCDIR) $(SRCDIR)/disposable $(SRCDIR)/list
 INCLUDE_DIR=$(PWD)/include
 INCLUDE_DIRS=$(INCLUDE_DIR) $(INCLUDE_DIR)/ej
 DIRS_BUILT=$(BUILD_DIR)/dirs_built
@@ -12,7 +12,7 @@ STRIPPED_SOURCES=$(patsubst $(SRCDIR)/%,%,$(SOURCES))
 MODEL_MAKEFILES?= \
     $(foreach file,$(wildcard models/*.mk),$(notdir $(file)))
 TESTDIR=$(PWD)/test
-TESTDIRS=$(TESTDIR) $(TESTDIR)/disposable
+TESTDIRS=$(TESTDIR) $(TESTDIR)/disposable $(TESTDIR)/list
 TEST_BUILD_DIR=$(BUILD_DIR)/test
 TEST_DIRS=$(filter-out $(TESTDIR), \
     $(patsubst $(TESTDIR)/%,$(TEST_BUILD_DIR)/%,$(TESTDIRS)))
@@ -48,11 +48,11 @@ GTEST_OBJ=$(TEST_BUILD_DIR)/gtest-all.o
 COMMON_INCLUDES=-I $(PWD)/include
 COMMON_CFLAGS=-std=c11 $(COMMON_INCLUDES)
 COMMON_CXXFLAGS=-std=c++14 $(COMMON_INCLUDES)
-CHECKED_CFLAGS=$(COMMON_CFLAGS) -O0 -fprofile-arcs -ftest-coverage
-DEBUG_CFLAGS=  $(COMMON_CFLAGS) -O0 -g
+CHECKED_CFLAGS=$(COMMON_CFLAGS) -O0 -fprofile-arcs -ftest-coverage -gdwarf-2
+DEBUG_CFLAGS=  $(COMMON_CFLAGS) -O0 -gdwarf-2
 RELEASE_CFLAGS=$(COMMON_CFLAGS) -O2
 TEST_CXXFLAGS=$(COMMON_CXXFLAGS) -I $(GTEST_DIR) \
-    -I $(GTEST_DIR)/include -O2
+    -I $(GTEST_DIR)/include -O2 -gdwarf-2
 
 .PHONY: pre-build build-dirs all clean test model-check
 .SECONDARY: all
