@@ -23,7 +23,7 @@
 int list_push_front(list_t* list, disposable_t* data)
 {
     MODEL_ASSERT(PROP_VALID_LIST(list));
-    MODEL_ASSERT(PROP_VALID_DISPOSABLE(disp));
+    MODEL_ASSERT(PROP_VALID_DISPOSABLE(data));
 
     /* attempt to allocate a list node. */
     list_node_t* node = (list_node_t*)malloc(sizeof(list_node_t));

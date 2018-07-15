@@ -10,6 +10,8 @@
 #ifndef  MODEL_CHECK_ASSERT_HEADER_GUARD
 # define MODEL_CHECK_ASSERT_HEADER_GUARD
 
+#include <model_check/malloc.h>
+
 #ifdef   __cplusplus
 extern "C" {
 #endif /*__cplusplus*/
