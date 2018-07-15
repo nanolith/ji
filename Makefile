@@ -107,4 +107,5 @@ $(DIRS_BUILT):
 	touch $(DIRS_BUILT)
 
 model-check:
-	$(foreach n, $(MODEL_MAKEFILES), (cd models && $(MAKE) -f $(n)) &&) true
+	echo $(MODEL_MAKEFILES) | \
+	xargs -I ARG -n 1 -P 4 /bin/sh -c "(cd models && $(MAKE) -f ARG)"
