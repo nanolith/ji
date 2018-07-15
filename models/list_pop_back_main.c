@@ -86,6 +86,10 @@ int main(int argc, char* argv[])
     MODEL_ASSERT(fb == f2);
     MODEL_ASSERT(fc == f3);
 
+    /* It is no longer possible to pop any other elements off of the list. */
+    foo_t* fd = NULL;
+    MODEL_ASSERT(0 != list_pop_back(&list, (disposable_t**)&fd));
+
     free(f1); free(f2); free(f3);
 
     dispose((disposable_t*)&list);
